@@ -1,39 +1,60 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
 
-function Header(){
+function Header(props){
 	return <header>
-	<h1><a href="/index.html">FunctionWeb</a></h1>
+	<h1><a href="/index.html" onClick={(event)=>{
+	event.preventDefault();
+	props.onSelect();}}>
+	WEB</a></h1>
 	</header>
 }
 
-function Navi() {
+function Navi(props) {
 	return <nav>
 	<ol>
-		<li><a href="/read/1.html">html</a></li>
-		<li><a href="/read/2.html">CSS</a></li>
-		<li><a href="/read/3.html">JavaScript</a></li>
+		{props.data.map(el=><li key = {el.id}>
+		<a href={"/read/"+el.id} 
+		onClick={event=>{
+		event.preventDefault();
+		props.onSelect();
+		}}>
+		{el.title}
+		</a></li>)}
 	</ol>
 	</nav>
 }
 
-function Arti(){
+function Arti(props){
 	return <article>
-		<h2>Welcome</h2>
-		Hello, Web!
+		<h2>{props.title}</h2>
+		{props.body}
 	</article>
 }
 
 function App() {
-  return (
-    <div className="App">
+	const topics = [
+		{id : 1, title : "html", body : "HTML is..."},
+		{id : 2, title : "CSS", body : "CSS is..."},
+		{id : 3, title : "JavaScript", body : "Java Script is ..."}
+	]
 	
-	<Header></Header>
-	<Navi></Navi>
-	<Arti></Arti>
+	const [mode, setMode] = useState("Read");
+	let content = null;
+
+	if (mode === "Read") content = <Arti title="READ" body="Hello READ"></Arti>
+	else if (mode == "Welcome") content = <Arti title="HTML" body="Hello HTML"></Arti>
+
+
+	return (
+    <div>
+		<Header onSelect={()=>setMode("Welcome")}></Header>
+		<Navi data={topics}  onSelect={()=>setMode("Read")}></Navi>
+		{content}
 
 	</div>
-  );
+	);
 }
 
 export default App;
