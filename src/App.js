@@ -1,59 +1,51 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState} from 'react';
+import {useState} from "react"
 
-function Header(props){
+function Head(props) {
 	return <header>
-	<h1><a href="/index.html" onClick={(event)=>{
-	event.preventDefault();
-	props.onSelect();}}>
+	<h1><a href="index.html" 
+	onClick={event=>{event.preventDefault();	props.onSelect();}}>
 	WEB</a></h1>
 	</header>
 }
 
-function Navi(props) {
+function Nav(props) {
 	return <nav>
-	<ol>
-		{props.data.map(el=><li key = {el.id}>
-		<a href={"/read/"+el.id} 
-		onClick={event=>{
-		event.preventDefault();
-		props.onSelect();
-		}}>
-		{el.title}
-		</a></li>)}
-	</ol>
-	</nav>
+		<ol>
+		{props.data.map(el=><li key={el.id}><a href={"/index/"+el.id} 
+		onClick={event=>{event.preventDefault(); props.onSelect();}}>
+		{el.title}</a></li>)}
+		</ol>
+		</nav>
 }
 
-function Arti(props){
+function Body(props){
 	return <article>
-		<h2>{props.title}</h2>
-		{props.body}
-	</article>
+		<h1>{props.name}</h1>
+		{props.readme}
+		</article>
 }
 
 function App() {
 	const topics = [
 		{id : 1, title : "html", body : "HTML is..."},
 		{id : 2, title : "CSS", body : "CSS is..."},
-		{id : 3, title : "JavaScript", body : "Java Script is ..."}
+		{id : 3, title : "JavaScript", body : "Java Script is "}
 	]
-	
-	const [mode, setMode] = useState("Read");
+
+	const [mode, setMode] = useState("Hello");
 	let content = null;
 
-	if (mode === "Read") content = <Arti title="READ" body="Hello READ"></Arti>
-	else if (mode == "Welcome") content = <Arti title="HTML" body="Hello HTML"></Arti>
+	if (mode === "Hello") content = <Body name = "JG" readme="Hello, JG!"></Body>
+	else if (mode === "Who") content = <Body name = "Who" readme="Who are you?"></Body>
 
-
-	return (
-    <div>
-		<Header onSelect={()=>setMode("Welcome")}></Header>
-		<Navi data={topics}  onSelect={()=>setMode("Read")}></Navi>
-		{content}
-
-	</div>
+  	return (
+    	<div className="App">
+			<Head onSelect={()=>setMode("Hello")}></Head>
+			<Nav data={topics} onSelect={()=>setMode("Who")}></Nav>
+    		{content}
+		</div>
 	);
 }
 
