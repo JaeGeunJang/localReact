@@ -22,8 +22,10 @@ function Nav(props) {
 
 function Body(props){
 	return <article>
+		<p>
 		<h1>{props.name}</h1>
 		{props.readme}
+		</p>
 		</article>
 }
 
